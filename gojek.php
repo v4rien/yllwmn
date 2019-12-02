@@ -47,5 +47,3 @@ if($logins->success == true) {
 			$verifs = json_decode($verif[0]);
 			if($verifs->success == true) {
 		
-        );
-	}
