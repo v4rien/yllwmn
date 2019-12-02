@@ -39,6 +39,10 @@ function verif($otp, $token)
 	$data = '{"client_name":"gojek:cons:android","data":{"otp":"' . $otp . '","otp_token":"' . $token . '"},"client_secret":"83415d06-ec4e-11e6-a41b-6c40088ab51e"}';
 	$verif = request("/v5/customers/phone/verify", "", $data);
 	if ($verif['success'] == 1)
+	$token = $verif['data']['access_token'];
+		echo "Token: ".$token;
+		echo "\n";
+		echo "\n";
 		{
 		return $verif['data']['access_token'];
 		}
