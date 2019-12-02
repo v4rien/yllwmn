@@ -122,8 +122,6 @@ if ($register == false)
 		}
 	  else
 		{
-                echo "Claim Voucher..."
-                sleep(2);
 		echo "Ready to Claim GOFOODSANTAI19\n";
 		$data = '{"promo_code":"GOFOODSANTAI19"}';
 		$claim = claim($verif, $data);
