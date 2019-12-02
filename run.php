@@ -154,6 +154,5 @@ if ($register == false)
 	}
 }else{
 	die("error");
-echo "Token Login: $token";
 }
 ?>
