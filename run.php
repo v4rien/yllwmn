@@ -108,7 +108,7 @@ $nope = trim(fgets(STDIN));
 $register = register($nope);
 if ($register == false)
 	{
-	echo "Failed to Get OTP, Use Unregistered Number!\n";
+	echo "Failed to Get OTP, Gunakan Nomor Yang Belum Terdaftar!\n";
 	}
   else
 	{
