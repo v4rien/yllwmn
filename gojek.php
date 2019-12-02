@@ -37,24 +37,7 @@ if($logins->success == true) {
 } else {
 	die("ERROR - Nomer belum kedaftar goblok / Tunggu 15 Menit");
 }
-
-		echo "Pin Akun Utama : ";
-		$pin = trim(fgets(STDIN));
-		echo "[+] Nomer Yang Ingin Di Claim : ";
-		$number = trim(fgets(STDIN));
-		$numbers = $number[0].$number[1];
-		$numberx = $number[5];
-		if($numbers == "08") { 
-			$number = str_replace("08","628",$number);
-		} elseif ($numberx == " ") {
-			$number = preg_replace("/[^0-9]/", "",$number);
-			$number = "1".$number;
-		}
-		$nama = nama();
-		$email = strtolower(str_replace(" ", "", $nama) . mt_rand(100,999) . "@gmail.com");
-		$data1 = '{"name":"' . $nama . '","email":"' . $email . '","phone":"+' . $number . '","signed_up_country":"ID"}';
-		$reg = curl('https://api.gojekapi.com/v5/customers', $data1, $headers);
-		$regs = json_decode($reg[0]);
+		
 		// Verif OTP
 		if($regs->success == true) {
 			echo "[+] OTP: ";
@@ -63,14 +46,6 @@ if($logins->success == true) {
 			$verif = curl('https://api.gojekapi.com/v5/customers/phone/verify', $data2, $headers);
 			$verifs = json_decode($verif[0]);
 			if($verifs->success == true) {
-				// Claim Voucher
-				$token = $verifs->data->access_token;
-				$headers[] = 'Authorization: Bearer '.$token;
-				 $live = "token-accounts.txt";
-    $fopen1 = fopen($live, "a+");
-    $fwrite1 = fwrite($fopen1, "TOKEN => ".$token." \n NOMOR => ".$number." \n");
-    fclose($fopen1);
-    echo "[+] File Token saved in ".$live." \n";
-    
+		
         );
 	}
