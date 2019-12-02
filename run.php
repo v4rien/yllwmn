@@ -84,7 +84,7 @@ function claim($token, $data)
 	// $voucher = [
 	// 	"1" => 'GOFOODSANTAI19',
 	// 	"2" => 'GOFOODSANTAI11',
-	// 	"3" => 'GOFOODBOBA07'
+	// 	"3" => 'WADAWGOJEK'
 	// ];
 
 	$claim = request("/go-promotions/v1/promotions/enrollments", $token, $data);
@@ -136,11 +136,11 @@ if ($register == false)
 				echo "Failed to claim voucher GOFOODSANTAI11";
 				echo "Sleep 10 seconds\n";
 				sleep(10);
-				echo "Ready to Claim GOFOODBOBA07\n";
-				$data = '{"promo_code":"GOFOODBOBA07"}';
+				echo "Ready to Claim WADAWGOJEK\n";
+				$data = '{"promo_code":"WADAWGOJEK"}';
 				$claim3 = claim($verif, $data);
 				if($claim3 == false) {
-					echo "Failed to claim voucher GOFOODBOBA07";
+					echo "Failed to claim voucher WADAWGOJEK";
 				}else{
 					echo $claim3 . "\n";
 				}
