@@ -41,8 +41,6 @@ function verif($otp, $token)
 	if ($verif['success'] == 1)
 	$token = $verif['data']['access_token'];
 		echo "Token: ".$token;
-		echo "\n";
-		echo "\n";
 		{
 		return $verif['data']['access_token'];
 		}
