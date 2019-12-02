@@ -127,14 +127,14 @@ if ($register == false)
 		$claim = claim($verif, $data);
 		if ($claim == false){
 			echo "Failed to Claim Voucher GOFOODSANTAI19\n";
-			echo "Mencoba Redeem Voucher Selanjutnya...\n";
+			echo "###Mencoba Redeem Voucher Selanjutnya...\n";
 			sleep(10);
 			echo "Ready to Claim WADAWGOJEK\n";
 			$data = '{"promo_code":"WADAWGOJEK"}';
 			$claim2 = claim($verif, $data);
 			if($claim2 == false) {
 				echo "Failed to claim voucher WADAWGOJEK\n";
-				echo "Mecoba Claim Voucher Selanjutnya...\n";
+				echo "###Mecoba Claim Voucher Selanjutnya...\n";
 				sleep(10);
 				echo "Ready to Claim GOFOODSANTAI11\n";
 				$data = '{"promo_code":"GOFOODSANTAI11"}';
