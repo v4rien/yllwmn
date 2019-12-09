@@ -39,8 +39,6 @@ function verif($otp, $token)
 	$data = '{"client_name":"gojek:cons:android","data":{"otp":"' . $otp . '","otp_token":"' . $token . '"},"client_secret":"83415d06-ec4e-11e6-a41b-6c40088ab51e"}';
 	$verif = request("/v5/customers/phone/verify", "", $data);
 	if ($verif['success'] == 1)
-	$token = $verif['data']['access_token'];
-		echo "Token: ".$token;
 		{
 		return $verif['data']['access_token'];
 		}
@@ -110,7 +108,7 @@ $nope = trim(fgets(STDIN));
 $register = register($nope);
 if ($register == false)
 	{
-	echo "Failed to Get OTP, Gunakan Nomor Yang Belum Terdaftar!\n";
+	echo "Failed to Get OTP, Gunakan Nomor Yang belum Terdaftar!\n";
 	}
   else
 	{
@@ -129,20 +127,20 @@ if ($register == false)
 		$claim = claim($verif, $data);
 		if ($claim == false){
 			echo "Failed to Claim Voucher GOFOODSANTAI19\n";
-			echo "###Mencoba Redeem Voucher Selanjutnya...\n";
+			echo "Mencoba Redeem Voucher Selanjutnya...\n";
 			sleep(10);
 			echo "Ready to Claim WADAWGOJEK\n";
 			$data = '{"promo_code":"WADAWGOJEK"}';
 			$claim2 = claim($verif, $data);
 			if($claim2 == false) {
 				echo "Failed to claim voucher WADAWGOJEK\n";
-				echo "###Mecoba Claim Voucher Selanjutnya...\n";
+				echo "Mencoba Redeem Voucher Selanjutnya...\n";
 				sleep(10);
 				echo "Ready to Claim GOFOODSANTAI11\n";
 				$data = '{"promo_code":"GOFOODSANTAI11"}';
 				$claim3 = claim($verif, $data);
 				if($claim3 == false) {
-					echo "Failed to claim voucher GOFOODSANTAI11, FINISH!!";
+					echo "Failed to claim voucher GOFOODSANTAI11";
 				}else{
 					echo $claim3 . "\n";
 				}
