@@ -1,114 +1,10 @@
 <?php
-#AUTO CLAIM VOC GOJEK + tf 1rp 
-#MASUKIN AKUN YANG UDAH VERIF 
-#Created By Alip Dzikri X Apri AMsyah
-#####################################
+###Ini Copyright###
+###https://github.com/osyduck/Gojek-Register###
 
-$secret = '83415d06-ec4e-11e6-a41b-6c40088ab51e';
-$headers = array();
-$headers[] = 'Content-Type: application/json';
-$headers[] = 'X-AppVersion: 3.27.0';
-$headers[] = "X-Uniqueid: ac94e5d0e7f3f".rand(111,999);
-$headers[] = 'X-Location: -6.405821,106.064193';
+include ("function.php");
 
-echo "Nomer HP Akun Utama: ";
-$number = trim(fgets(STDIN));
-$numbers = $number[0].$number[1];
-$numberx = $number[5];
-if($numbers == "08") { 
-	$number = str_replace("08","628",$number);
-}
-$login = curl('https://api.gojekapi.com/v3/customers/login_with_phone', '{"phone":"+' . $number . '"}', $headers);
-$logins = json_decode($login[0]);
-if($logins->success == true) {
-	echo "OTP: ";
-	$otp = trim(fgets(STDIN));
-	$data1 = '{"scopes":"gojek:customer:transaction gojek:customer:readonly","grant_type":"password","login_token":"' . $logins->data->login_token . '","otp":"' . $otp . '","client_id":"gojek:cons:android","client_secret":"' . $secret . '"}';
-	$verif = curl('https://api.gojekapi.com/v3/customers/token', $data1, $headers);
-	$verifs = json_decode($verif[0]);
-	if($verifs->success == true) {
-		$token = $verifs->data->access_token;
-		echo "Token: ".$token;
-		echo "\n";
-		echo "\n";
-	} else {
-		die("OTP salah goblok!");
-	}
-} else {
-	die("ERROR - Nomer belum kedaftar goblok / Tunggu 15 Menit");
-}
-
-		echo "Pin Akun Utama : ";
-		$pin = trim(fgets(STDIN));
-		echo "[+] Nomer Yang Ingin Di Claim : ";
-		$number = trim(fgets(STDIN));
-		$numbers = $number[0].$number[1];
-		$numberx = $number[5];
-		if($numbers == "08") { 
-			$number = str_replace("08","628",$number);
-		} elseif ($numberx == " ") {
-			$number = preg_replace("/[^0-9]/", "",$number);
-			$number = "1".$number;
-		}
-		$nama = nama();
-		$email = strtolower(str_replace(" ", "", $nama) . mt_rand(100,999) . "@gmail.com");
-		$data1 = '{"name":"' . $nama . '","email":"' . $email . '","phone":"+' . $number . '","signed_up_country":"ID"}';
-		$reg = curl('https://api.gojekapi.com/v5/customers', $data1, $headers);
-		$regs = json_decode($reg[0]);
-		// Verif OTP
-		if($regs->success == true) {
-			echo "[+] OTP: ";
-			$otp = trim(fgets(STDIN));
-			$data2 = '{"client_name":"gojek:cons:android","data":{"otp":"' . $otp . '","otp_token":"' . $regs->data->otp_token . '"},"client_secret":"' . $secret . '"}';
-			$verif = curl('https://api.gojekapi.com/v5/customers/phone/verify', $data2, $headers);
-			$verifs = json_decode($verif[0]);
-			if($verifs->success == true) {
-				// Claim Voucher
-				$token = $verifs->data->access_token;
-				$headers[] = 'Authorization: Bearer '.$token;
-				 $live = "token-accounts.txt";
-    $fopen1 = fopen($live, "a+");
-    $fwrite1 = fwrite($fopen1, "TOKEN => ".$token." \n NOMOR => ".$number." \n");
-    fclose($fopen1);
-    echo "[+] File Token saved in ".$live." \n";
-    echo "[+]Process Redeem GOFOODBOBA07 \n";
-				$data3 = '{"promo_code":"GOFOODBOBA07"}';
-				$claim = curl('https://api.gojekapi.com/go-promotions/v1/promotions/enrollments', $data3, $headers);
-				$claims = json_decode($claim[0]);
-					echo $claims->data->message;
-					echo "\n";
-					sleep(3);
-					echo "[+]Process Redeem COBAINGOJEK \n";
-						$data4 = '{"promo_code":"COBAINGOJEK"}';
-				$claim1 = curl('https://api.gojekapi.com/go-promotions/v1/promotions/enrollments', $data4, $headers);
-				$claims1 = json_decode($claim1[0]);
-					echo $claims1->data->message;
-					sleep(3);
-					echo "[+]Process TF 1rp \n";
-					$getqrid = curl('https://api.gojekapi.com/wallet/qr-code?phone_number=%2B'.$number.'', null, $headers);
-					$jsqrid = json_decode($getqrid[0]);
-					$qrid = $jsqrid->data->qr_id;
-$headertf = array();
-$headertf[] = 'Content-Type: application/json';
-$headertf[] = 'X-AppVersion: 3.27.0';
-$headertf[] = "X-Uniqueid: ac94e5d0e7f3f".rand(111,999);
-$headertf[] = 'X-Location: -6.405821,106.64193';
-$headertf[] ='Authorization: Bearer '.$token;
-$headertf[] = 'pin:'.$pin.'';
-
-$tf = curl('https://api.gojekapi.com/v2/fund/transfer', '{"amount":"1","description":"DowerGanteng ","qr_id":"'.$qrid.'"}', $headertf);
-$jstf = json_decode($tf[0]);
-if($jstf->status == "1"){
-	echo "[+]SUKSES TF";
-	} else {
-		print_r($jstf);
-		}
-					
-					} 
-												
-							
-							}
-							function nama()
+function nama()
 	{
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, "http://ninjaname.horseridersupply.com/indonesian_name.php");
@@ -121,27 +17,142 @@ if($jstf->status == "1"){
 	preg_match_all('~(&bull; (.*?)<br/>&bull; )~', $ex, $name);
 	return $name[2][mt_rand(0, 14) ];
 	}
-
-function curl($url, $fields = null, $headers = null)
-    {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        if ($fields !== null) {
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
-        }
-        if ($headers !== null) {
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        }
-        $result   = curl_exec($ch);
-        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-        
-        return array(
-            $result,
-            $httpcode
-        );
+function register($no)
+	{
+	$nama = nama();
+	$email = str_replace(" ", "", $nama) . mt_rand(100, 999);
+	$data = '{"name":"' . $nama . '","email":"' . $email . '@gmail.com","phone":"+' . $no . '","signed_up_country":"ID"}';
+	$register = request("/v5/customers", "", $data);
+	//print_r($register);
+	if ($register['success'] == 1)
+		{
+		return $register['data']['otp_token'];
+		}
+	  else
+		{
+      save("error_log.txt", json_encode($register));
+		return false;
+		}
 	}
+function verif($otp, $token)
+	{
+	$data = '{"client_name":"gojek:cons:android","data":{"otp":"' . $otp . '","otp_token":"' . $token . '"},"client_secret":"83415d06-ec4e-11e6-a41b-6c40088ab51e"}';
+	$verif = request("/v5/customers/phone/verify", "", $data);
+	if ($verif['success'] == 1)
+		{
+		return $verif['data']['access_token'];
+		}
+	  else
+		{
+      save("error_log.txt", json_encode($verif));
+		return false;
+		}
+	}
+	function login($no)
+	{
+	$nama = nama();
+	$email = str_replace(" ", "", $nama) . mt_rand(100, 999);
+	$data = '{"phone":"+'.$no.'"}';
+	$register = request("/v4/customers/login_with_phone", "", $data);
+	//print_r($register);
+	if ($register['success'] == 1)
+		{
+		return $register['data']['login_token'];
+		}
+	  else
+		{
+      save("error_log.txt", json_encode($register));
+		return false;
+		}
+	}
+function veriflogin($otp, $token)
+	{
+	$data = '{"client_name":"gojek:cons:android","client_secret":"83415d06-ec4e-11e6-a41b-6c40088ab51e","data":{"otp":"'.$otp.'","otp_token":"'.$token.'"},"grant_type":"otp","scopes":"gojek:customer:transaction gojek:customer:readonly"}';
+	$verif = request("/v4/customers/login/verify", "", $data);
+	if ($verif['success'] == 1)
+		{
+		return $verif['data']['access_token'];
+		}
+	  else
+		{
+      save("error_log.txt", json_encode($verif));
+		return false;
+		}
+	}
+function claim($token, $data)
+	{
+	// $voucher = [
+	// 	"1" => 'GOFOODSANTAI19',
+	// 	"2" => 'GOFOODSANTAI11',
+	// 	"3" => 'GOFOODSANTAI08'
+	// ];
+
+	$claim = request("/go-promotions/v1/promotions/enrollments", $token, $data);
+	if ($claim['success'] == 1)
+		{
+		return $claim['data']['message'];
+		}
+	  else
+		{
+      save("error_log.txt", json_encode($claim));
+		return false;
+		}
+	}
+echo "Choose Register? Register = 2: ";
+$type = trim(fgets(STDIN));
+if($type == 2){
+echo "It's Register Way\n";
+echo "Input 62 For ID and 1 For US Phone Number\n";
+echo "Enter Number: ";
+$nope = trim(fgets(STDIN));
+$register = register($nope);
+if ($register == false)
+	{
+	echo "Failed to Get OTP, Gunakan Nomor Yang belum Terdaftar!\n";
+	}
+  else
+	{
+	echo "Enter Your OTP: ";
+	// echo "Enter Number: ";
+	$otp = trim(fgets(STDIN));
+	$verif = verif($otp, $register);
+	if ($verif == false)
+		{
+		echo "Failed to Registering Your Number!\n";
+		}
+	  else
+		{
+		echo "Ready to Claim GOFOODSANTAI19\n";
+		$data = '{"promo_code":"GOFOODSANTAI19"}';
+		$claim = claim($verif, $data);
+		if ($claim == false){
+			echo "Failed to Claim Voucher GOFOODSANTAI19\n";
+			echo "#Mencoba Redeem Voucher Selanjutnya...\n";
+			sleep(10);
+			echo "Ready to Claim GOFOODSANTAI11\n";
+			$data = '{"promo_code":"GOFOODSANTAI11"}';
+			$claim2 = claim($verif, $data);
+			if($claim2 == false) {
+				echo "Failed to claim voucher GOFOODSANTAI11\n";
+				echo "#Mencoba Redeem Voucher Selanjutnya...\n";
+				sleep(10);
+				echo "Ready to Claim GOFOODSANTAI08\n";
+				$data = '{"promo_code":"GOFOODSANTAI08"}';
+				$claim3 = claim($verif, $data);
+				if($claim3 == false) {
+					echo "Failed to claim voucher GOFOODSANTAI08";
+				}else{
+					echo $claim3 . "\n";
+				}
+			}else{
+				echo $claim2 . "\n";
+			}
+			}else{
+			echo $claim . "\n";
+			}
+		}
+	}
+}else{
+	die("error");
+}
+?>
