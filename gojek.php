@@ -82,7 +82,7 @@ function veriflogin($otp, $token)
 function claim($token, $data)
 	{
 	// $voucher = [
-	// 	"1" => 'GOPAYTANGO',
+	// 	"1" => 'Z398VPT',
 	// 	"2" => 'GOFOODSANTAI11',
 	// 	"3" => 'GOFOODSANTAI08'
 	// ];
@@ -122,11 +122,11 @@ if ($register == false)
 		}
 	  else
 		{
-		echo "Ready to Claim GOPAYTANGO\n";
-		$data = '{"promo_code":"GOPAYTANGO"}';
+		echo "Ready to Claim Z398VPT\n";
+		$data = '{"promo_code":"Z398VPT"}';
 		$claim = claim($verif, $data);
 		if ($claim == false){
-			echo "Failed to Claim Voucher GOPAYTANGO\n";
+			echo "Failed to Claim Voucher Z398VPT\n";
 			echo "#Mencoba Redeem Voucher Selanjutnya...\n";
 			sleep(10);
 			echo "Ready to Claim GOFOODSANTAI11\n";
